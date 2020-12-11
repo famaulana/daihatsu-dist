@@ -1,0 +1,39 @@
+:root{
+    --primary: #3C5B9A;
+    --hover: #2b4985;
+}
+
+.btn-primary{
+    background-color: var(--primary);
+    border: 0px;
+    border-radius: 15pc;
+    -webkit-border-radius: 15pc;
+    -moz-border-radius: 15pc;
+    -ms-border-radius: 15pc;
+    -o-border-radius: 15pc;
+}
+
+.btn-primary:hover{
+    background-color: var(--hover);
+}
+
+.banner-image{
+    width: 100%;
+}
+
+h1.heading{
+    color: #3C5B9A;
+}
+
+.login .form-group{
+    padding: 0;
+}
+
+.form-container{
+    display: flow-root; 
+}
+
+.select2-container--bootstrap .select2-selection--single {
+    height: 38px !important;
+    padding: 8px 24px 6px 12px !important;
+}
