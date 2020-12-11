@@ -65,8 +65,8 @@ class Mailer_model extends CI_Model
         'smtp_host' => 'smtp.gmail.com', # Change this
         'smtp_crypto' => 'tls',
         'smtp_port' => 587,
-        'smtp_user'   => 'daihatsu.mail.sender@gmail.com',
-        'smtp_pass'  => 'wqdznsbhmqkpwmhq',
+        'smtp_user'   => '#############@gmail.com',
+        'smtp_pass'  => '###########',
         'mailtype'  => 'html',
         // 'smtp_timeout' => 20,
     );
