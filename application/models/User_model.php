@@ -11,11 +11,11 @@ class User_model extends CI_Model {
 
   public function checkUser($data)
   {
-    $dataUser = $this->db->query('SELECT username, dealer, password FROM user where username = "'.$data['username'].'"')->result_array();
+    $dataUser = $this->db->query('SELECT * FROM user where username = "'.$data['username'].'"')->result_array();
     if($dataUser){
       foreach($dataUser as $userData){
         if($userData['dealer'] == $data['dealer'] && $userData['password'] == $data['password']){
-          return true;
+          return $userData;
           break;
         }
       }

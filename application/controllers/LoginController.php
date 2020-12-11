@@ -8,6 +8,7 @@ class LoginController extends CI_Controller
   {
     parent::__construct();
     $this->load->model('User_model');
+    $this->load->model('Mailer_model');
   }
 
   public function index()
@@ -27,13 +28,13 @@ class LoginController extends CI_Controller
   {
     $authData = $this->input->post();
     $authData = array(
-      'username' => "rayno23",
-      'password' => "apahayo123",
+      'username' => "famaulana",
+      'password' => "itsmee",
       'dealer'   => "Astra Daihatsu Jayakarta"
     );
     $auth = $this->User_model->checkUser($authData);
-    if($auth){
-      print_r('success');
+    if(!empty($auth) || $auth != false){
+      $this->Mailer_model->index($auth);
     } else{
       print_r('failed');
     }
