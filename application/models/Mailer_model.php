@@ -9,23 +9,32 @@ class Mailer_model extends CI_Model
     parent::__construct();
     date_default_timezone_set("Asia/Jakarta");
     $this->load->database();
+    $this->load->library('session');
   }
 
   public function index($data)
   {
     $dateNow = date('y-m-d');
     if(preg_match('/'.$dateNow.'/', $data['inputdtm'])){
-      print_r($data);
+      $this->sessionSet($data['id']);
+      return true;
     }else{
       $data['verifycode'] = $this->authKey();
       $data['inputdtm'] = date('y-m-d H:i:s');
       if($this->updateKey($data)){
         $this->posttomail($data);
-        print_r("success");
+        $this->sessionSet($data['id']);
+        return true;
       }else{
-        print_r($data);
+        return false;
       }
     }
+  }
+
+  public function sessionSet($data)
+  {
+    $this->session->set_userdata('authKeyStatus', $data);
+    return true;
   }
 
   public function authKey()
@@ -46,7 +55,6 @@ class Mailer_model extends CI_Model
     }else{
       return false;
     }
-
   }
 
   public function posttomail($data){
@@ -72,8 +80,7 @@ class Mailer_model extends CI_Model
     $this->email->to($data['email']);
     
     $this->email->subject('Authentication Code - Daihatsu DIST');
-    $this->email->message('<html><body><img style="width:50%" src="'.base_url().'assets/template/image/unnamed.png" alt=""><h3>Konfirmasi Kode Autentikasi DIST</h3><p>Hi '.$data['name'].'</p><p>Kode autentikasi anda adalah : <b>'.$data['verifycode'].'</b></p></body></html>');
-    // $this->email->message('<html><body><img style="width:50%" src="'.base_url().'assets/template/image/unnamed.png" alt=""><h3>Konfirmasi Kode Autentikasi DIST</h3><p>Hi '.$data['name'].'</p><p>Kode autentikasi anda adalah : <b>'.$data['verifycode'].'</b></p><p>Jika anda ingin langsung melanjutkan ke website masuk dengan url berikut : </p><p><a href="http://localhost/dist/login">http://localhost/dist/login</a></p></body></html>');
+    $this->email->message('<html><body><img style="width:50%" src="'.base_url().'assets/template/image/unnamed.png" alt=""><h3>Konfirmasi Kode Autentikasi DIST</h3><p>Hi '.$data['name'].'</p><p>Kode autentikasi anda adalah : <b>'.$data['verifycode'].'</b></p><p>Jika anda ingin langsung melanjutkan ke website masuk dengan url berikut : </p><p><a href="'.base_url().'verifyAuth/'.$data['id'].'DisT'.$data['verifycode'].'">'.base_url().'verifyAuth/'.$data['id'].'DisT'.$data['verifycode'].'</a></p></body></html>');
     // $this->email->message('Done');
 
     // return $this->email->send();

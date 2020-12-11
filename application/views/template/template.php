@@ -26,7 +26,20 @@
         <?php $this->load->view('public/'.$view)?>
     </div>
     <?php $this->load->view('template/footer')?>
+
 </body>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h5 class="modal-title" id="exampleModalLongTitle">Verification Authentication Key</h5>
+                <p>Silahkan melakukan verifikasi melalui akun email Anda</p>
+                <button type="button" class="btn btn-primary px-5" data-dismiss="modal" aria-label="Close">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="<?php echo base_url()?>/assets/JQuery/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -36,10 +49,13 @@
         $('#dealer-option').select2({
             theme: "bootstrap"
         });
+
+        <?php if($this->session->flashdata('succes')){?>
+            $('#loginModal').modal('show');
+        <?php }?>
     });
     
     $('.burger').click(function(){
-        // console.log("jancok");
         if($(this).hasClass("active")){
             $(this).removeClass("active");
             $('.menu-navbar').css("display", "none");

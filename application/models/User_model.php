@@ -9,6 +9,18 @@ class User_model extends CI_Model {
     $this->load->database();
   }
 
+  public function getDetailNow()
+  {
+    $data = $this->db->query('SELECT inputdtm from user ORDER BY inputdtm DESC')->result_array()[0]['inputdtm'];
+    return $data;
+  }
+
+  public function getUserById($id)
+  {
+    $dataUser = $this->db->query('SELECT * FROM user where id = "'.$id.'"')->result_array();
+    return $dataUser;
+  }
+
   public function checkUser($data)
   {
     $dataUser = $this->db->query('SELECT * FROM user where username = "'.$data['username'].'"')->result_array();

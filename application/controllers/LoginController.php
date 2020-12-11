@@ -9,13 +9,22 @@ class LoginController extends CI_Controller
     parent::__construct();
     $this->load->model('User_model');
     $this->load->model('Mailer_model');
+    $this->load->library('session');
+    date_default_timezone_set("Asia/Jakarta");
   }
 
   public function index()
   {
+    $dateYesterday = $this->User_model->getDetailNow();
+    $dateYesterday = new DateTime($dateYesterday);
+    $dateYesterday = $dateYesterday->format('Y-m-d');
+    if(date('Y-m-d') != $dateYesterday){
+      $this->session->sess_destroy();
+    } else if ($authConfirm = $this->session->userdata('authKeyStatus') != null) {
+      return redirect('/authentication');
+    }
+
     $dealers = $this->User_model->getDealer();
-    // var_dump($dealers);
-    // exit;
     $views = array(
       'tittle' => 'Login - Daihatsu DIST',
       'view' => 'login',
@@ -35,9 +44,22 @@ class LoginController extends CI_Controller
     $auth = $this->User_model->checkUser($authData);
     if(!empty($auth) || $auth != false){
       $this->Mailer_model->index($auth);
+      // return redirect('/authentication');
+      $this->succes();
     } else{
       print_r('failed');
     }
+  }
+
+  public function succes()
+  {
+    $this->session->set_flashdata('succes', 'User listed bellow');
+    return redirect('/authentication');
+  }
+
+  public function logout()
+  {
+    $this->session->sess_destroy();
   }
 
 }

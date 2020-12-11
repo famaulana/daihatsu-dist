@@ -54,3 +54,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = 'loginController/auth';
+$route['logout'] = 'loginController/logout';
+$route['authentication'] = 'VerifyController/index';
+$route['verifyAuth'] = 'VerifyController/verifyAuth';
+$route['verifyAuth/(:any)'] = 'VerifyController/verifyAuth';

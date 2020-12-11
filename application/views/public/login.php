@@ -1,6 +1,6 @@
 <div class="row">
     <div class="container">
-        <h1 class="heading mb-5">Daihatsu Integrated Training System (DITS)</h1>
+        <h1 class="heading mb-5">Daihatsu Integrated Training System (DITS) <?php echo $this->session->userdata('authKeyStatus')?></h1>
         
         <form action="login" method="POST">
             <div class="form-container">
